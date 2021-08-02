@@ -17,7 +17,38 @@ function setup() {
     grid = new Grid();
 }
 
-function mouseClicked() {
+function deviceShaken() {
+    if (click_count === 0) {
+        grid.clear();
+    } 
+    if (click_count === 1) {
+        SET_STATE = 1;
+    }
+    if (click_count > 1) {
+        SET_STATE = 0;
+        click_count = 0;
+    }
+}
+
+function touchStarted() {
+    if (click_count === 0) {
+        click_count += 1;
+    } else {
+        click_count = 0;
+    }
+}
+
+function touchEnded() {
+    if (SET_STATE === 0) {
+        click_count = 0;
+    } else {
+        grid.set_values();
+        SET_STATE = 0;
+        click_count = 0;
+    }
+}
+
+/*function mouseClicked() {
     if (click_count === 0) {
         click_count += 1;
         SET_STATE = 1;
@@ -28,11 +59,7 @@ function mouseClicked() {
         grid.set_values();
         SET_STATE = 0;
     }
-}
-
-function doubleClicked() {
-    grid.clear();
-}
+}*/
 
 function draw() {
     background(0);
